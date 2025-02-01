@@ -1,0 +1,128 @@
+# ================================
+# General
+# ================================
+.DS_Store
+*.log
+*.tmp
+*.swp
+*.env
+*.env.local
+*.env.development
+*.env.production
+node_modules/
+dist/
+build/
+.cache/
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ================================
+# Angular
+# ================================
+/.angular/
+/browser/
+/server/
+**/coverage/
+**/dist/
+**/tmp/
+**/node_modules/
+
+# ================================
+# NestJS
+# ================================
+/dist/
+/node_modules/
+/npm-debug.log
+/yarn-error.log
+/.env
+
+# ================================
+# Docker
+# ================================
+docker-compose.override.yml
+docker-compose.prod.yml
+docker-compose.dev.yml
+**/.dockerignore
+**/Dockerfile
+**/docker-compose.yml
+
+# ================================
+# Database
+# ================================
+*.db
+*.sqlite
+*.dump
+
+# ================================
+# Python
+# ================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+*.venv/
+venv/
+env/
+ENV/
+.env/
+.python-version
+
+# ================================
+# AWS
+# ================================
+.aws/
+*.aws
+*.awsconfig
+
+# ================================
+# CI/CD
+# ================================
+.circleci/
+.travis.yml
+.github/
+.gitlab-ci.yml
+.azure-pipelines/
+
+# ================================
+# IDE Specific
+# ================================
+# JetBrains IDEs (e.g., IntelliJ, WebStorm)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ================================
+# OS Specific
+# ================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
