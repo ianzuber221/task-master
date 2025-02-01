@@ -1,8 +1,3 @@
-Here’s a polished and professional **README.md** for your Task Manager app, **TaskMaster**. This README is designed to showcase your project effectively, provide clear instructions for setup, and highlight your skills as a developer.
-
----
-
-```markdown
 # TaskMaster 🚀
 
 TaskMaster is a full-stack task management platform designed to help individuals and teams organize, track, and collaborate on tasks efficiently. Built with modern technologies, TaskMaster offers a seamless user experience, robust functionality, and scalability.
