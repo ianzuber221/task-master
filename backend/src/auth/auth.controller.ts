@@ -14,7 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   @UseGuards(AuthGuard('local'))
@@ -26,9 +26,9 @@ export class AuthController {
   }
 
   @Post('register')
-  register(@Body() registerDto: RegisterDto) { };
+  register(@Body() registerDto: RegisterDto) {}
 
   @Post('profile')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Request() req) { }
+  getProfile(@Request() req) {}
 }
