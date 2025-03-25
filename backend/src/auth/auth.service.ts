@@ -23,18 +23,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectRepository(AuthUser) // Inject the repository for the User entity
     private readonly authUserRepository: Repository<AuthUser>
-  ) { }
-  login({ username, password }: LoginDto) {
-    const dbUser = fake.find((user) => user.username === username);
+  ) {}
+  async login({ username, password }: LoginDto) {
+    const dbUser = await this.authUserRepository.findOneBy({ username });
+    console.log(dbUser);
     if (!dbUser) return null;
-    if (dbUser.password === password) {
+    if (bcrypt.compareSync(password, dbUser.password)) {
       const { password, ...user } = dbUser;
       return this.jwtService.sign(user);
     }
   }
   async register(registerDto: RegisterDto) {
     const { username, email, password } = registerDto;
-
     // Check if user already exists
     const existingUser = await this.authUserRepository.findOne({
       where: [{ username }, { email }],
@@ -55,5 +55,11 @@ export class AuthService {
 
     // Save the user to the database
     return this.authUserRepository.save(authUser);
+  }
+  getProfile(username: string) {
+    return this.authUserRepository.findOne({
+      where: { username },
+      select: ['id', 'username', 'email', 'role'],
+    });
   }
 }
