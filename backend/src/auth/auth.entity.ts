@@ -9,8 +9,8 @@ import {
 
 @Entity('auth_user')
 export class AuthUser {
-  @PrimaryGeneratedColumn()
-  id: number; // Unique ID for the user
+  @PrimaryGeneratedColumn('uuid')
+  id: string; // Unique ID for the user
 
   @Column({ unique: true })
   username: string; // Unique username for login

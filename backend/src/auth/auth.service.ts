@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto/register.dto';
@@ -24,24 +24,34 @@ export class AuthService {
     @InjectRepository(AuthUser) // Inject the repository for the User entity
     private readonly authUserRepository: Repository<AuthUser>
   ) {}
-  async login({ username, password }: LoginDto) {
-    const dbUser = await this.authUserRepository.findOneBy({ username });
-    console.log(dbUser);
-    if (!dbUser) return null;
-    if (bcrypt.compareSync(password, dbUser.password)) {
-      const { password, ...user } = dbUser;
-      return this.jwtService.sign(user);
+
+  login = async ({ username, password }: LoginDto) => {
+    try {
+      const dbUser = await this.authUserRepository.findOneBy({ username });
+      console.log(dbUser);
+      if (!dbUser) return null;
+      if (bcrypt.compareSync(password, dbUser.password)) {
+        const { password, ...user } = dbUser;
+        return this.jwtService.sign(user);
+      }
+    } catch (error) {
+      throw new InternalServerErrorException('Database query failure' + error);
     }
-  }
-  async register(registerDto: RegisterDto) {
+  };
+
+  register = async (registerDto: RegisterDto) => {
     const { username, email, password } = registerDto;
     // Check if user already exists
-    const existingUser = await this.authUserRepository.findOne({
-      where: [{ username }, { email }],
-    });
+    try {
+      const existingUser = await this.authUserRepository.findOne({
+        where: [{ username }, { email }],
+      });
 
-    if (existingUser) {
-      throw new Error('User already exists');
+      if (existingUser) {
+        throw new Error('User already exists');
+      }
+    } catch (error) {
+      throw new InternalServerErrorException('Database query failure' + error);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -54,12 +64,20 @@ export class AuthService {
     });
 
     // Save the user to the database
-    return this.authUserRepository.save(authUser);
-  }
-  getProfile(username: string) {
-    return this.authUserRepository.findOne({
-      where: { username },
-      select: ['id', 'username', 'email', 'role'],
-    });
-  }
+    try {
+      return await this.authUserRepository.save(authUser);
+    } catch (error) {
+      throw new InternalServerErrorException('Database query failure' + error);
+    }
+  };
+  getProfile = async (username: string) => {
+    try {
+      return await this.authUserRepository.findOne({
+        where: { username },
+        select: ['id', 'username', 'email', 'role'],
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('Database query failure' + error);
+    }
+  };
 }

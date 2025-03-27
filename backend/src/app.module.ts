@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthUser } from './auth/auth.entity';
+import { TaskEntity } from './tasks/task.entity/task.entity';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { AuthUser } from './auth/auth.entity';
           'your_password'
         ),
         database: configService.get<string>('DATABASE_NAME', 'your_database'),
-        entities: [AuthUser],
+        entities: [AuthUser, TaskEntity],
         synchronize: true, // Set to false in production
       }),
       inject: [ConfigService],
